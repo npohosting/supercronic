@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-cronjob
+spec:
+  selector:
+    matchLabels:
+      app: my-cronjob
+  template:
+    metadata:
+      labels:
+        app: my-cronjob
+    spec:
+      containers:
+      - name: my-cronjob
+        image: registry.npohosting.nl/npohosting/base-supercronic:3.18.0
+        command:
+          - /usr/local/bin/supercronic
+        args:
+          - /config/crontab
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+          requests:
+            memory: "128Mi"
+            cpu: "500m"
+        volumeMounts:
+          - name: my-crontab
+            mountPath: /config
+      volumes:
+        - name: my-crontab
+          configMap:
+            name: my-crontab

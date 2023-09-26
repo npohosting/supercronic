@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: my-crontab
+data:
+  crontab: |
+    */1 * * * * echo "Hello from job 1"
+    */5 * * * * echo "Hello from job 2"
